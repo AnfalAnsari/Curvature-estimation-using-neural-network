@@ -1,0 +1,51 @@
+input -> 1. grid (nxn), volume fraction
+         2. curvature/radius
+
+the data if not in the form of grid(n*n) then it will be converted to in  matrix format of size n*m.
+array -> NX9
+
+start from (0,0), move until any point reached
+dfs --> vis array --> true --> 9 grid points
+
+ nx = 2000;
+ ny = 2000;
+ V[nx][ny];   //input
+ cur[np];     //output
+ fra[np][9];  //output
+
+
+void dfs(vis, v, x, y, fra, np)
+{
+    vis[x][y] = 1;
+    int dx = [-1,-1,-1,0,0,0,1,1,1] 
+    int dy = [-1,0,1,-1,0,1,-1,0,1]
+    
+    for(int i=0;i<9;i++)
+    {
+        int new_x = x+dx[i];
+        int new_y = y+dy[i];
+         
+        fra[np][i] = V[new_x][new_y];
+        
+        if(vis[new_x, new_y]!=1 && V[new_x][new_y]!=0)
+         {
+           dfs(vis, v, x, y, fra, np+1);
+         }
+         
+    }
+}
+
+
+vis[nx][ny] = {0};
+ for(int i=0;i<nx;i++)
+ {
+    for(int j=1;j<ny;j++)
+    {
+       if(v[i][j]!=0)
+         {
+           dfs(vis,v,i,j,fra); 
+         }
+    }
+ }
+
+ 
