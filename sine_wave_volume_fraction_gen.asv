@@ -59,7 +59,7 @@ for i=1:np
     end
 end    
 
-save("data_sine_wave", "volumeFraction", "cur","-v7.3");
+save("data_sine_wave_left_to_right_order", "volumeFraction", "cur","-v7.3");
 
 function dfs(matrix,x,y)
 global vis;
@@ -70,22 +70,29 @@ global curvature;
 vis(x,y) = 1;
 
 if ( (x == 50 && y == 1) || (x == 49 && y == 1) || (x==51 && y==100 ) || (x==52 && y==100 ) )
+    np = np-1;
     return
 end
 
-dx = [1 0 -1 1 0 -1 1 0 -1];
-dy = [1 1 1 0 0 0 -1 -1 -1];
+% dx = [1 0 -1 1 0 -1 1 0 -1];
+% dy = [1 1 1 0 0 0 -1 -1 -1];
+ dx = [-1 -1 -1 0 0 0 1 1 1];
+ dy = [-1 0 1 -1 0 1 -1 0 1];
+
+
 factionIndex = np;
+
+display(np + " " + x + " " + " " + y)
 
 for i = 1:9
     new_x = x+dx(i); 
     new_y = y+dy(i);
     
-    display(x + " " + y + " " + new_x + " " + new_y)
+    % display(x + " " + y + " " + new_x + " " + new_y)
     fra(factionIndex,i) = matrix(new_x, new_y);
 
     mid_x = (2*x-1)/200;
-    curvature(fracationIndex) = abs(pi*pi*sin(2*pi*mid_x))/( 1 + 0.25*pi*pi*cos(2*pi*mid_x)*cos(2*pi*mid_x) )^(3/2) ;
+    curvature(factionIndex) = abs(pi*pi*sin(2*pi*mid_x))/( 1 + 0.25*pi*pi*cos(2*pi*mid_x)*cos(2*pi*mid_x) )^(3/2) ;
 
    
     

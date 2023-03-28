@@ -15,7 +15,7 @@ for i=3:length(fileDirectory)
     cur = split(fileName, ["r", ".mat"]);
     cur = str2num(cell2mat(cur(2)));
     load (folderName + "/" + fileName);
-    input = data';
+    input = data;
     display(fileName + " " + gridSize + " " + cur )
      generateData(gridSize,gridSize,1/(gridSize*cur),input);
  end
@@ -42,6 +42,8 @@ function generateData(nx, ny, cur_value, input)
         end
         matrix(row , col) = input(1,i);
     end
+
+    save("matrix.mat", "matrix");
     
     for i = 1:nx
         for j = 1:ny
@@ -62,7 +64,7 @@ function generateData(nx, ny, cur_value, input)
     end    
     
    
-   fileName = "data_with_only_additional_values.mat";
+   fileName = "data_test.mat";
 
     m = matfile(fileName, 'Writable',true);
     

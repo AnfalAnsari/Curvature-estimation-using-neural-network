@@ -59,7 +59,7 @@ for i=1:np
     end
 end    
 
-save("data_sine_wave", "volumeFraction", "cur","-v7.3");
+save("data_sine_wave_left_to_right_order", "volumeFraction", "cur","-v7.3");
 
 function dfs(matrix,x,y)
 global vis;
@@ -74,8 +74,12 @@ if ( (x == 50 && y == 1) || (x == 49 && y == 1) || (x==51 && y==100 ) || (x==52 
     return
 end
 
-dx = [1 0 -1 1 0 -1 1 0 -1];
-dy = [1 1 1 0 0 0 -1 -1 -1];
+% dx = [1 0 -1 1 0 -1 1 0 -1];
+% dy = [1 1 1 0 0 0 -1 -1 -1];
+ dx = [-1 -1 -1 0 0 0 1 1 1];
+ dy = [-1 0 1 -1 0 1 -1 0 1];
+
+
 factionIndex = np;
 
 display(np + " " + x + " " + " " + y)

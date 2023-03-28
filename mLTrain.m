@@ -11,7 +11,7 @@
 clear
 close all
 
-load data.mat
+load data_without_additional_values.mat
 x = volumeFraction';
 t = cur';
 
@@ -23,7 +23,7 @@ t = cur';
 trainFcn = 'trainlm';  % Levenberg-Marquardt backpropagation.
 
 % Create a Fitting Network
-hiddenLayerSize = 100;
+hiddenLayerSize = 150;
 net = fitnet(hiddenLayerSize,trainFcn);
 
 % Setup Division of Data for Training, Validation, Testing
@@ -37,18 +37,28 @@ net.divideParam.testRatio = 15/100;
 % Test the Network
 y = net(x);
 e = gsubtract(t,y);
-performance = perform(net,t,y)
+performance = perform(net,t,y);
 
 % % View the Network
 % view(net)
+outputFolder = "./results/150/additional_data/";
+
+h = findall(groot,'Type','Figure');
+
+
+%saving the nerural network
+save( outputFolder + "net.mat", "net");
 
 % Generate function
-genFunction(net,'NNCircle2');
+genFunction(net, outputFolder + 'NNCircle2');
+
+%saving figures to save workspace
+save(outputFolder + "tr");
 
 % Plots
 % Uncomment these lines to enable various plots.
 % figure, plotperform(tr)
 % figure, plottrainstate(tr)
-% figure, ploterrhist(e)
+figure, ploterrhist(e)
 %figure, plotregression(t,y)
 % figure, plotfit(net,x,t)
