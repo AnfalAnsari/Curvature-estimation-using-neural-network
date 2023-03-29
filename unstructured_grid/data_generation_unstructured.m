@@ -2,7 +2,7 @@ clear
 close all
 
 
-numOfCellNeighbours = 10;
+numOfCellNeighbours = 9;
 
 global cellArea
 cellArea = [];
@@ -24,17 +24,17 @@ global cellNumbers;
 cellNumbers = [];
 
 % GETTING ALL FILES IN THE FOLDER
-folderArray = ["200x200_unstruc","400x400_unstruc"];
+folderArray = ["200unstruc","400unstruc", "600unstruc", "800unstruc", "1000unstruc", "1200unstruc_1", "1200unstruc_2", "1400unstruc1", "1400unstruc_2",];
 absolutePath = "E:\BTP_CURVATURE_ESTIMATION_DATA\";
 
 for z=1:numel(folderArray)
    
    folderName = folderArray(z);
-   fileDirectory = dir("./" + folderName);
+   fileDirectory = dir(absolutePath + folderName);
      for i=3:length(fileDirectory)
     
         fileName = fileDirectory(i).name;
-    
+        display(folderName + " " + fileName)
         if fileName == "cell_area.txt"
             fid = fopen(absolutePath + folderName+'\' + fileName ,'r');
             tline = fgetl(fid);
@@ -67,6 +67,7 @@ for z=1:numel(folderArray)
         elseif fileName == "cell_vertex_neighbours.txt"
     
             fid = fopen(absolutePath + folderName+'\' + fileName ,'r');
+            
             tline = fgetl(fid);
     
             while ischar(tline)
@@ -145,15 +146,24 @@ for z=1:numel(folderArray)
                     end
     
                     % SAVING TARGET FOR EACH CELL
-                    target(dataIndex) = (1/radius)*sqrt(cellArea(i));
+                    target(dataIndex,1) = (1/radius)*sqrt(cellArea(i));
     
                 end
             end
-    
-            save("unstructured_data_complete.mat", "volumeFraction", "target", "cellNumbers");
+              
     
     
         end
     end
+   
+   %  REINITIALISING GLOBAL VARIABLE FOR DIFFERENT GRID SIZE 
+     cellArea = [];
+     cellVertices = [];
+     cellVertexNeighbours = [];
+     cellNumbers = [];
+
+
 end
+
+save("unstructured_data_complete.mat", "volumeFraction", "target", "cellNumbers");
 
