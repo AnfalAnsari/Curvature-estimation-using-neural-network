@@ -47,7 +47,7 @@ for z=1:numel(folderArray)
             end
             fclose(fid);
         elseif fileName == "cell_vertices.txt"
-            fid = fopen( absolutePath + folderName+'\' + fileName ,'r');
+            fid = fopen('./'+ folderName+'\' + fileName ,'r');
             tline = fgetl(fid);
     
             while ischar(tline)
@@ -66,7 +66,7 @@ for z=1:numel(folderArray)
     
         elseif fileName == "cell_vertex_neighbours.txt"
     
-            fid = fopen(absolutePath + folderName+'\' + fileName ,'r');
+            fid = fopen('./'+ folderName+'/' + fileName ,'r');
             tline = fgetl(fid);
     
             while ischar(tline)
@@ -89,7 +89,7 @@ for z=1:numel(folderArray)
             radius= split(fileName, ["r", ".vtk"]);
             radius = str2double(cell2mat(radius(2)));
     
-            fid = fopen(absolutePath + folderName+'\' + fileName ,'r');
+            fid = fopen('./'+ folderName+'/' + fileName ,'r');
             tline = fgetl(fid);
             flag = 0;
             volumeFractionList = [];
@@ -150,7 +150,7 @@ for z=1:numel(folderArray)
                 end
             end
     
-            save("unstructured_data_complete.mat", "volumeFraction", "target", "cellNumbers");
+            save("unstructured_data_test.mat", "volumeFraction", "target", "cellNumbers");
     
     
         end

@@ -41,7 +41,7 @@ performance = perform(net,t,y);
 
 % % View the Network
 % view(net)
-outputFolder = "./results/150/additional_data/";
+outputFolder = "./results/150/unstructured_data/";
 
 h = findall(groot,'Type','Figure');
 
