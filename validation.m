@@ -1,7 +1,8 @@
-load('data_sine_wave_left_to_right_order.mat');
+load('data_sine_wave.mat');
 volumeFraction = volumeFraction';
+middleX = middleX';
 cur = cur';
-cur = cur/100;
+cur = cur;
 
 
 % Define net function
@@ -9,18 +10,11 @@ load('./results/150/additional_data/net.mat');
 
 % Calculate output values
 output = net(volumeFraction);
-output = abs(output);
+output = output*100;
 
 
-% Plot parity plot
-figure;
-scatter(cur, output);
-hold on;
-plot(output, output);
-xlabel('Target');
-ylabel('Output');
-title('Parity plot: Target vs. Output');
 
+% Analytical v/s predicted value of curvature
 y = zeros(1000);
 x = zeros(1000);
 
@@ -31,5 +25,24 @@ for i=1:1000
 end
 
 figure(2);
+xlabel('x');
+ylabel('curvature');
 plot(x,y);
+hold on;
+scatter(middleX,output);
+
+
+
+
+% Plot parity plot
+output = abs(output);
+figure;
+scatter(cur, output);
+hold on;
+plot(output, output);
+xlabel('Target');
+ylabel('Output');
+title('Parity plot: Target vs. Output');
+
+
 
