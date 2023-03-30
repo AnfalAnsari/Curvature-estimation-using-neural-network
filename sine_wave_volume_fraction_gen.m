@@ -3,7 +3,7 @@ close all
 % input variables nx, ny, np, cur
 
 nx = 100;
-ny = 100;
+ny = 50;  % 100 for full sine wave 50 for half sine wave
 np = nx*ny;
 
 global fra
@@ -16,6 +16,9 @@ vis = zeros(nx, ny);
 
 global np
 np = 1;  
+
+global middleX;
+middleX = [];
 
 % filename = 'R=0.425.xlsx';
 % input = xlsread(filename);
@@ -31,8 +34,8 @@ input = data';
 matrix = zeros(nx,ny);
 
 for i=1: (nx*ny)
-    col = ceil(i/ny); 
-    row = ny - rem(i,nx) + 1;
+    col = ceil(i/nx); 
+    row = nx - rem(i,nx) + 1;
     
     if(row == nx+1)
        row = 1;
@@ -59,25 +62,35 @@ for i=1:np
     end
 end    
 
-save("data_sine_wave_left_to_right_order", "volumeFraction", "cur","-v7.3");
+save("data_sine_half_wave", "volumeFraction", "cur","middleX","-v7.3");
 
 function dfs(matrix,x,y)
 global vis;
 global fra;
 global np;
 global curvature;
+global middleX;
 
 vis(x,y) = 1;
 
-if ( (x == 50 && y == 1) || (x == 49 && y == 1) || (x==51 && y==100 ) || (x==52 && y==100 ) )
+%For half sine wave
+if ( (x == 50 && y == 1) || (x == 49 && y == 1) || (x==49 && y==50 ) || (x==50 && y==50 ) )
     np = np-1;
     return
 end
 
-% dx = [1 0 -1 1 0 -1 1 0 -1];
-% dy = [1 1 1 0 0 0 -1 -1 -1];
- dx = [-1 -1 -1 0 0 0 1 1 1];
- dy = [-1 0 1 -1 0 1 -1 0 1];
+% For full sine wave 
+% if ( (x == 50 && y == 1) || (x == 49 && y == 1) || (x==51 && y==100 ) || (x==52 && y==100 ) )
+%     np = np-1;
+%     return
+% end
+
+dx = [1 0 -1 1 0 -1 1 0 -1];
+dy = [1 1 1 0 0 0 -1 -1 -1];
+
+% for left to right reading of neighbours starting from top left
+%  dx = [-1 -1 -1 0 0 0 1 1 1];  
+%  dy = [-1 0 1 -1 0 1 -1 0 1];
 
 
 factionIndex = np;
@@ -91,10 +104,11 @@ for i = 1:9
     % display(x + " " + y + " " + new_x + " " + new_y)
     fra(factionIndex,i) = matrix(new_x, new_y);
 
-    mid_x = (2*x-1)/200;
+    mid_x = (2*y-1)/200;
     curvature(factionIndex) = abs(pi*pi*sin(2*pi*mid_x))/( 1 + 0.25*pi*pi*cos(2*pi*mid_x)*cos(2*pi*mid_x) )^(3/2) ;
-
-   
+     
+    middleX(factionIndex,1) = mid_x;
+    
     
     if (vis(new_x,new_y)~=1) &&  (matrix(new_x,new_y)~=0) && (matrix(new_x,new_y)~=1)
         np = np+1;

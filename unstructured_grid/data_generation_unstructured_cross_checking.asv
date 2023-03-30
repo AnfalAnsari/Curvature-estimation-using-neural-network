@@ -24,7 +24,7 @@ global cellNumbers;
 cellNumbers = [];
 
 % GETTING ALL FILES IN THE FOLDER
-folderArray = ["200unstruc","400unstruc", "600unstruc", "800unstruc", "1000unstruc", "1200unstruc_1", "1200unstruc_2", "1400unstruc1", "1400unstruc_2",];
+folderArray = ["200unstruc"];
 absolutePath = "E:\BTP_CURVATURE_ESTIMATION_DATA\";
 
 for z=1:numel(folderArray)
@@ -34,9 +34,8 @@ for z=1:numel(folderArray)
      for i=3:length(fileDirectory)
     
         fileName = fileDirectory(i).name;
-%         display(folderName + " " + fileName)
+        display(folderName + " " + fileName)
         if fileName == "cell_area.txt"
-%             disp("ok");
             fid = fopen(absolutePath + folderName+'\' + fileName ,'r');
             tline = fgetl(fid);
     
@@ -113,7 +112,7 @@ for z=1:numel(folderArray)
     
                 tline = fgetl(fid);
             end
-            
+            display(volumeFractionList)
             fclose(fid);
     
             for i=1:numel(cellArea)
@@ -149,6 +148,7 @@ for z=1:numel(folderArray)
     
                     % SAVING TARGET FOR EACH CELL
                     target(dataIndex,1) = (1/radius)*sqrt(cellArea(i));
+                   
     
                 end
             end
@@ -167,5 +167,5 @@ for z=1:numel(folderArray)
 
 end
 
-save("unstructured_data_complete.mat", "volumeFraction", "target", "cellNumbers");
+save("unstructured_data_complete_testing.mat", "volumeFraction", "target", "cellNumbers");
 

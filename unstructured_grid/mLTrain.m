@@ -11,9 +11,9 @@
 clear
 close all
 
-load data_with
+load (".\generated_data\ten_neighbours\data_greater_than_equal_to_1000.mat")
 x = volumeFraction';
-t = cur';
+t = target';
 
 % Choose a Training Function
 % For a list of all training functions type: help nntrain
@@ -41,24 +41,25 @@ performance = perform(net,t,y);
 
 % % View the Network
 % view(net)
-outputFolder = "./results/150/previous_data/";
+% outputFolder = "./results/150/unstructured_data/";
+outputFolder="C:\Users\Admin\Downloads\BTP_CURVATURE_ESTIMATION\results\150\unstructured_data_1000\";
 
 h = findall(groot,'Type','Figure');
 
 
 %saving the nerural network
-save( outputFolder + "net.mat", "net");
+ save(outputFolder + "net.mat", "net");
 
 % Generate function
-genFunction(net, outputFolder + 'NNCircle2');
+ genFunction(net, outputFolder + 'NNCircle2');
 
 %saving figures to save workspace
-save(outputFolder + "tr");
+ save(outputFolder + "tr");
 
 % Plots
 % Uncomment these lines to enable various plots.
 % figure, plotperform(tr)
 % figure, plottrainstate(tr)
-figure, ploterrhist(e)
+% figure, ploterrhist(e)
 %figure, plotregression(t,y)
 % figure, plotfit(net,x,t)

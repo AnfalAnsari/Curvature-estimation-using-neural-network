@@ -24,7 +24,7 @@ global cellNumbers;
 cellNumbers = [];
 
 % GETTING ALL FILES IN THE FOLDER
-folderArray = ["200unstruc","400unstruc", "600unstruc", "800unstruc", "1000unstruc", "1200unstruc_1", "1200unstruc_2", "1400unstruc1", "1400unstruc_2",];
+folderArray = ["200unstruc"];
 absolutePath = "E:\BTP_CURVATURE_ESTIMATION_DATA\";
 
 for z=1:numel(folderArray)
@@ -112,6 +112,7 @@ for z=1:numel(folderArray)
     
                 tline = fgetl(fid);
             end
+            
             fclose(fid);
     
             for i=1:numel(cellArea)
@@ -150,15 +151,12 @@ for z=1:numel(folderArray)
     
                 end
             end
-
-            
-    
-            save("unstructured_data_complete.mat", "volumeFraction", "target", "cellNumbers");
+              
     
     
         end
     end
-   
+    display(cellNumbers);
    %  REINITIALISING GLOBAL VARIABLE FOR DIFFERENT GRID SIZE 
      cellArea = [];
      cellVertices = [];
@@ -167,4 +165,6 @@ for z=1:numel(folderArray)
 
 
 end
+
+save("unstructured_data_complete_test.mat", "volumeFraction", "target", "cellNumbers");
 
