@@ -1,0 +1,41 @@
+
+
+load data_0.425.mat;
+dataSize = numel(volumeFraction)/9;
+isPositiveList = zeros(dataSize,1);
+
+for i=1:dataSize
+    sum = 0;
+    for k=1:9
+    sum = sum + volumeFraction(i,k);
+    end
+
+    if sum<4.5
+        isPositive = 1 ;
+    else 
+        isPositive = 0;
+    end    
+
+    if(isPositive == 0)
+        display("wrong logic", )
+
+    isPositiveList(i,1) = isPositive;
+%     display(isPositive)
+    
+    
+end
+
+%plot(isPositiveList, dataSize);
+
+function  [isPositive] = estimateSign(volumeFraction)
+    sum =0;
+    for i=1:9
+    sum = sum + volumeFraction(i) + sum;
+    end
+
+    if sum<4.5
+        isPositive = 1 ;
+    else 
+        isPositive = 0;
+    end    
+end
